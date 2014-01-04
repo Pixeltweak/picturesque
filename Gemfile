@@ -7,7 +7,8 @@ ruby '2.1.0'
 gem 'rails', '4.0.2'
 
 # Database
-gem 'sqlite3'
+gem 'sqlite3', group: [:development, :test]
+gem 'pg', group: [:production]
 
 # Asset helpers
 gem 'sass-rails', '~> 4.0.0'
