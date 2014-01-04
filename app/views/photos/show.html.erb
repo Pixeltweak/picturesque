@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="photo-well">
+      <%= link_to image_tag(@photo.image.url(:display)), @photo.image.url, target: '_blank' %>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <h3><%= @photo.title %></h3>
+        <p><%= @photo.description %></p>
+        <p>
+          Tags:
+          <% @photo.tags.each do |tag| %>
+            <%= link_to tag, photos_path(tag: tag.to_s), class: 'label label-info' %>
+          <% end %>
+        </p>
+      </div>
+      <div class="col-md-4 clearfix text-right">
+        <br />
+        Published: <%= time_ago_in_words @photo.created_at %> ago <br />
+        Author: <%= link_to @photo.user.name, @photo.user %>
+        <br />
+        <br />
+        <% if user_signed_in? %>
+          <%= form_tag rate_photo_path(@photo) do %>
+            <% if current_user.voted_for? @photo %>
+              <%= button_tag content_tag(:span, '', class: 'glyphicon glyphicon-thumbs-down')+' Un-like', class: 'btn btn-default btn-xs' %>
+            <% else %>
+              <%= button_tag content_tag(:span, '', class: 'glyphicon glyphicon-thumbs-up')+' Like', class: 'btn btn-success btn-xs' %>
+            <% end %>
+            &nbsp;
+            <%= content_tag :span, nil, class: 'glyphicon glyphicon-heart' %> <%= @photo.likes.size %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <hr />
+    <% cache do %>
+      <h4><%= pluralize @photo.comments.size, 'comment' %></h4>
+      <%= render partial: 'partials/comments', collection: @photo.comments.recent.limit(30).all, as: :comment %>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <div class="media">
+        <a class="pull-left" href="#">
+          <%= image_tag current_user.avatar.url(:medium) %>
+        </a>
+        <%= form_tag photo_comments_path(@photo) do %>
+          <div class="media-body">
+            <%= label_tag :comment, "#{current_user.name}'s comment" %>
+            <%= text_area_tag :comment, '', class: 'form-control', rows: 3, placeholder: 'Add a comment...' %><br />
+            <%= button_tag 'Post comment', class: 'btn btn-primary btn-submit pull-right' %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="well text-center">
+        You must <%= link_to 'sign in', new_user_session_path %> or
+        <%= link_to 'create an account', new_user_registration_path %> to participate in the comments.
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-3">
+    <% if @photo.more_by_author.size > 1 %>
+      <h5>More by <%= link_to @photo.user.name, @photo.user %>:</h5>
+      <div class="clearfix">
+        <%= render partial: 'partials/thumbnail_gallery', collection: @photo.more_by_author.includes(:votes), as: :picture %>
+      </div>
+    <% end %>
+    <h5>Popular photos:</h5>
+    <%= render partial: 'partials/thumbnail_gallery', collection: Photo.popular_photos, as: :picture %>
+  </div>
+</div>

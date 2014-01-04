@@ -1,45 +1,33 @@
 // import the CSS framework
 @import "bootstrap";
 
-// make all images responsive by default
-img {
-  @extend .img-responsive;
-  margin: 0 auto;
-  }
-// override for the 'Home' navigation link
-.navbar-brand {
-  font-size: inherit;
-  }
+// No blue blue fade
+input.form-control:focus, textarea.form-control:focus { box-shadow:none }
 
-// THESE ARE EXAMPLES YOU CAN MODIFY
-// create your own classes
-// to make views framework-neutral
-.column {
-  @extend .col-md-6;
-  @extend .text-center;
+nav.navbar {
+  border-radius:0;
+  padding:10px 12px;
+  border-top:none;
+  a.navbar-brand {
+    color:#6391c7;
+    background:#fff;
+    border-radius:6px;
+    font-weight: bold;
+    &:hover {
+      color:#2556a5;
+      background:#fff;
+      text-decoration: underline;
+    }
   }
-.form {
-  @extend .col-md-6;
+  .header-avatar {
+    margin:-7px 5px -5px -3px; // getting it aligned just right takes some work!
+    border-radius:3px;
   }
-.form-centered {
-  @extend .col-md-6;
-  @extend .text-center;
-  }
-.submit {
-  @extend .btn;
-  @extend .btn-primary;
-  @extend .btn-lg;
-  }
-// apply styles to HTML elements
-// to make views framework-neutral
-main {
-  @extend .container;
-  background-color: #eee;
-  padding-bottom: 80px;
-  width: 100%;
-  margin-top: 51px; // accommodate the navbar
-  }
-section {
-  @extend .row;
-  margin-top: 20px;
-  }
+}
+
+.btn-submit {
+  border-radius:2px;
+  @include gradient-vertical(#3d96cc, #08c);
+  font-weight:bold;
+  box-shadow:inset 0 1px 0 0 rgba(255, 255, 255, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}

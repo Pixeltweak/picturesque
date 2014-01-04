@@ -1,14 +1,18 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
+<h3>Manage your account</h3>
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
   <%= f.error_notification %>
   <%= display_base_errors resource %>
-  <%= f.input :name, :autofocus => true %>
-  <%= f.input :email, :required => true %>
-  <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
-  <%= f.input :password_confirmation, :required => false %>
-  <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
-  <%= f.button :submit, 'Update', :class => 'btn-primary' %>
+  <%= f.input :name, wrapper: :group %>
+  <%= f.input :email, required: true, wrapper: :group %>
+  <%= f.input :password, autocomplete: "off", hint: "Leave it blank if you don't want to change it", required: false, wrapper: :group %>
+  <%= f.input :password_confirmation, required: false, wrapper: :group %>
+  <%= f.input :current_password, hint: "We need your current password to confirm your changes", required: true, wrapper: :group %>
+  <strong>Your avatar:</strong><br />
+  <%= image_tag current_user.avatar.url(:large) %>
+  <%= f.file_field :avatar, wrapper: :group %>
+  <br />
+  <%= f.button :submit, 'Update settings', class: 'btn btn-primary btn-submit' %>
 <% end %>
-<h3>Cancel my account</h3>
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
-<%= link_to "Back", :back %>
+<hr>
+<small>Don't want to be a part of <%= project_name %> any longer?</small><br />
+<%= link_to "Delete my account", registration_path(resource_name), class: 'btn btn-default btn-sm', data: { confirm: "Are you sure?" }, method: :delete %>

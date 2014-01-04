@@ -46,7 +46,7 @@ SimpleForm.setup do |config|
   end
 
   # The default wrapper to be used by the FormBuilder.
-  config.default_wrapper = :default
+  # config.default_wrapper = :default
 
   # Define the way to render check boxes / radio buttons with labels.
   # Defaults to :nested for bootstrap config.
@@ -141,5 +141,43 @@ SimpleForm.setup do |config|
   # config.cache_discovery = !Rails.env.development?
 
   # Default class for inputs
-  # config.input_class = nil
+   # you need an updated simple_form gem for this to work, I'm referring to the git repo in my Gemfile
+  config.input_class = "form-control"
+
+  config.wrappers :bootstrap, tag: 'div', class: 'form-group', error_class: 'error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :label
+    b.use :input
+    b.use :error, wrap_with: { tag: 'span', class: 'help-inline' }
+    b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+  end
+
+  config.wrappers :group, tag: 'div', class: "form-group", error_class: 'error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :label
+    b.use :input, wrap_with: { class: "form-group" }
+    b.use :hint,  wrap_with: { tag: 'span', class: 'help-block' }
+    b.use :error, wrap_with: { tag: 'span', class: 'help-inline' }
+  end
+
+  config.wrappers :checkbox, tag: :div, class: "checkbox", error_class: "has-error" do |b|
+     b.use :html5
+
+     # Form components
+     b.wrapper tag: :label do |ba|
+       ba.use :input
+       ba.use :label_text
+     end
+
+     b.use :hint,  wrap_with: { tag: :p, class: "help-block" }
+     b.use :error, wrap_with: { tag: :span, class: "help-block text-danger" }
+   end
+
+  # Wrappers for forms and inputs using the Twitter Bootstrap toolkit.
+  # Check the Bootstrap docs (http://twitter.github.com/bootstrap)
+  # to learn about the different styles for forms and inputs,
+  # buttons and other elements.
+  config.default_wrapper = :bootstrap
 end

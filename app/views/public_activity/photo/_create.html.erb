@@ -1,0 +1,8 @@
+<div class="media">
+  <%= image_tag activity.owner.avatar.url(:thumb), class: 'pull-left' %>
+  <div class="media-body">
+    Uploaded a new photo <%= time_ago_in_words activity.created_at %> ago:<br />
+    <%= render partial: 'partials/thumbnail_gallery', locals: { picture: activity.trackable } %>
+  </div>
+</div>
+<br>

@@ -1,0 +1,13 @@
+<div class="media comment">
+  <div class="pull-left left-col">
+    <%= link_to image_tag(comment.user.avatar.url(:thumb)), comment.user %><br />
+  </div>
+  <div class="media-body">
+    <small>
+      <%= content_tag :span, nil, class: 'glyphicon glyphicon-time', title: "#{time_ago_in_words(comment.created_at)} ago" %>
+      <strong class="comment-author"><%= link_to comment.user.name, comment.user %></strong> said:
+    </small>
+    <br />
+    <p><%= comment.comment %></p>
+  </div>
+</div>

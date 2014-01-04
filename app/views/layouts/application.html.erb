@@ -9,12 +9,19 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <header>
-      <%= render 'layouts/navigation' %>
-    </header>
-    <main role="main">
-       <%= render 'layouts/messages' %>
-       <%= yield %>
-    </main>
+    <div class="container">
+      <header>
+        <%= render 'layouts/navigation' %>
+      </header>
+      <main role="main">
+         <%= render 'layouts/messages' %>
+         <%= yield %>
+      </main>
+      <hr>
+      <footer class="text-muted text-center">
+        <small>&copy; Tyler Diaz, <%= Time.now.year %> - All rights reserved</small>
+      </footer>
+      <br>
+    </div>
   </body>
 </html>

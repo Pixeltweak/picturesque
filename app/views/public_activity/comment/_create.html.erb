@@ -1,0 +1,14 @@
+<div class="media">
+  <%= image_tag activity.owner.avatar.url(:thumb), class: 'pull-left' %>
+  <div class="media-body">
+    Posted a comment <%= time_ago_in_words activity.created_at %> ago
+    <blockquote>
+      <p><%= truncate activity.trackable.comment, length: 115 %></p>
+      <small>
+        <%= activity.trackable.user.name %> on
+        <%= link_to activity.parameters[:title], photo_path(activity.parameters[:id]) %>
+      </small>
+    </blockquote>
+  </div>
+</div>
+<br>

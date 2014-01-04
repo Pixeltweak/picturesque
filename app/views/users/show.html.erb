@@ -1,3 +1,42 @@
-<h3>User</h3>
-<p>User: <%= @user.name %></p>
-<p>Email: <%= @user.email if @user.email %></p>
+<div class="row">
+  <div class="col-md-6">
+    <div class="media">
+      <%= link_to image_tag(@user.avatar.url(:medium)), @user.avatar.url, target: '_blank', class: 'pull-left' %>
+      <div class="media-body">
+        <h4 class="media-heading"><%= @user.name %>'s profile</h4>
+        <span class="glyphicon glyphicon-eye-open" title="Page views"></span> <strong><%= @user.page_views %></strong> &bull;
+        <span class="glyphicon glyphicon-camera" title="Uploaded photos"></span> <strong><%= @user.photos.size %></strong> &bull;
+        <span class="glyphicon glyphicon-heart" title="Likes"></span> <strong><%= @user.total_photo_likes %></strong> &bull;
+        <span class="glyphicon glyphicon-star" title="Followers"></span> <strong><%= @user.followers_count %></strong>
+        <br>
+        <br>
+        <% if current_user.id != @user.id %>
+          <% if current_user.following?(@user) %>
+            <%= form_tag unfollow_user_path(@user) do %>
+              <%= button_tag content_tag(:span, '', class: 'glyphicon glyphicon-heart-empty')+' Unfollow', class: 'btn btn-default btn-sm' %>
+            <% end %>
+          <% else %>
+            <%= form_tag follow_user_path(@user) do %>
+              <%= button_tag content_tag(:span, '', class: 'glyphicon glyphicon-heart')+' Follow', class: 'btn btn-success btn-sm' %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <br />
+    <h4>Activity feed</h4>
+    <% @user.activity.each do |activity| %>
+      <% if activity.trackable  %>
+        <div class="activity clearfix">
+          <%= render_activity activity %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <h4>Photo Gallery</h4>
+    <div class="clearfix">
+      <%= render partial: 'partials/thumbnail_gallery', collection: @user.photos.includes([:votes, :user]), as: :picture %>
+    </div>
+  </div>
+</div>
