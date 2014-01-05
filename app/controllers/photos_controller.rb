@@ -46,7 +46,17 @@ class PhotosController < ApplicationController
 
   def search
     @tile_thumbnails = true
-    @photos = Photo.where('title LIKE ?', "%#{params[:query]}%").order(created_at: :desc)
+    @photos = Photo.joins(:user)
+                   .where('LOWER(photos.title) LIKE :q OR LOWER(users.name) LIKE :q',
+                      { q: "%#{params[:query]}%".downcase
+                    })
+                   .order(created_at: :desc)
+                   .to_a
+
+    @tagged_photos = Photo.tagged_with(params[:query].downcase)
+                          .to_a
+
+    @photos = (@photos | @tagged_photos) # union
 
     render 'index'
   end
