@@ -51,9 +51,11 @@ class PhotosController < ApplicationController
                       { q: "%#{params[:query]}%".downcase
                     })
                    .order(created_at: :desc)
+                   .limit(40)
                    .to_a
 
     @tagged_photos = Photo.tagged_with(params[:query].downcase)
+                          .limit(40)
                           .to_a
 
     @photos = (@photos | @tagged_photos) # union
