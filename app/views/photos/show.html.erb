@@ -34,10 +34,10 @@
       </div>
     </div>
     <hr />
-    <% cache do %>
-      <h4><%= pluralize @photo.comments.size, 'comment' %></h4>
-      <%= render partial: 'partials/comments', collection: @photo.comments.recent.limit(30).all, as: :comment %>
-    <% end %>
+      <% cache ['photo-comments', @photo.comments] do %>
+        <h4><%= pluralize @photo.comments.size, 'comment' %></h4>
+        <%= render partial: 'partials/comments', collection: @photo.comments.recent.limit(30).all, as: :comment %>
+      <% end %>
 
     <% if user_signed_in? %>
       <div class="media">
