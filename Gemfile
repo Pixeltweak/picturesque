@@ -48,7 +48,7 @@ gem 'acts-as-taggable-on'
 gem "acts_as_follower"
 
 # User preferences
-gem 'ledermann-rails-settings', :require => 'rails-settings'
+gem 'ledermann-rails-settings', require: 'rails-settings'
 
 # Comments
 gem 'acts_as_commentable'
@@ -73,13 +73,13 @@ group :development do
   gem 'binding_of_caller'
   gem 'guard'
   gem 'guard-rspec'
-  gem 'hub', :require=>nil
+  gem 'hub', require: nil
   gem 'quiet_assets'
   gem 'pry'
   gem 'rails_layout'
-  gem 'rb-fchange', :require=>false
-  gem 'rb-fsevent', :require=>false
-  gem 'rb-inotify', :require=>false
+  gem 'rb-fchange', require: false
+  gem 'rb-fsevent', require: false
+  gem 'rb-inotify', require: false
 end
 
 group :development, :test do
