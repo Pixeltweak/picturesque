@@ -47,9 +47,6 @@ gem 'acts-as-taggable-on'
 # Follow users
 gem "acts_as_follower"
 
-# User preferences
-gem 'ledermann-rails-settings', require: 'rails-settings'
-
 # Comments
 gem 'acts_as_commentable'
 
