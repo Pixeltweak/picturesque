@@ -29,6 +29,8 @@ class Photo < ActiveRecord::Base
                       display: "840x1200>",
                       tiny_thumb: "50x50>"
                     },
+                    access_key_id: ENV['S3_ACCESS_KEY_ID'],
+                    secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
                     convert_options: { thumb: "-quality 75 -strip" }
 
   validates_attachment :image, content_type: {

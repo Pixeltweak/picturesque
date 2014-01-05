@@ -55,6 +55,7 @@ gem 'acts_as_votable'
 
 # Upload photos + avatars
 gem "paperclip", "~> 3.0"
+gem 'aws-sdk', '~> 1.5.7'
 
 # News feed
 gem 'public_activity'
