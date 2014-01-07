@@ -52,10 +52,8 @@ class User < ActiveRecord::Base
   end
 
   def privacy(key)
-    if UserPrivacy.defaults[key].present?
-      @privacy = self.privacies.create_with(value: UserPrivacy.defaults[key])
-                               .find_or_create_by(key: key)
-
+    if UserPrivacy::DEFAULTS[key].present?
+      @privacy = self.privacies.find_or_create_by(key: key)
       @privacy.value
     else
       false
@@ -63,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def list_privacies
-    Hash[ self.privacies.map{ |p| [p.key.to_sym, p.value] } ].reverse_merge!(UserPrivacy.defaults)
+    Hash[ self.privacies.map{ |p| [p.key.to_sym, p.value] } ].reverse_merge!(UserPrivacy::DEFAULTS)
   end
 
 end

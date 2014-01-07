@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def update_privacies
-    UserPrivacy.defaults.keys.each do |key|
+    UserPrivacy::DEFAULTS.keys.each do |key|
       value = params[:privacy][key] || false
       setting = current_user.privacies.find_or_initialize_by(key: key)
       setting.update(value: value)
