@@ -103,6 +103,8 @@ GEM
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     hike (1.2.3)
+    honeybadger (1.10.1)
+      json
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -259,6 +261,7 @@ DEPENDENCIES
   figaro
   guard
   guard-rspec
+  honeybadger
   hub
   impressionist
   jbuilder (~> 1.2)

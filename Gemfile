@@ -66,6 +66,9 @@ gem 'impressionist'
 # Allow markdown on the comments
 gem 'bluecloth'
 
+# Error reporting
+gem 'honeybadger'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
