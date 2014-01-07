@@ -11,4 +11,7 @@ class RegistrationsController < Devise::RegistrationsController
     }
   end
 
+  def edit
+    @user_privacies = current_user.list_privacies
+  end
 end

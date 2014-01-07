@@ -1,18 +1,35 @@
-<h3>Manage your account</h3>
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
-  <%= f.error_notification %>
-  <%= display_base_errors resource %>
-  <%= f.input :name, wrapper: :group %>
-  <%= f.input :email, required: true, wrapper: :group %>
-  <%= f.input :password, autocomplete: "off", hint: "Leave it blank if you don't want to change it", required: false, wrapper: :group %>
-  <%= f.input :password_confirmation, required: false, wrapper: :group %>
-  <%= f.input :current_password, hint: "We need your current password to confirm your changes", required: true, wrapper: :group %>
-  <strong>Your avatar:</strong><br />
-  <%= image_tag current_user.avatar.url(:large) %>
-  <%= f.file_field :avatar, wrapper: :group %>
-  <br />
-  <%= f.button :submit, 'Update settings', class: 'btn btn-primary btn-submit' %>
-<% end %>
-<hr>
-<small>Don't want to be a part of <%= project_name %> any longer?</small><br />
-<%= link_to "Delete my account", registration_path(resource_name), class: 'btn btn-default btn-sm', data: { confirm: "Are you sure?" }, method: :delete %>
+<div class="row">
+  <div class="col-md-6">
+    <h3>Manage your account</h3>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
+      <%= f.error_notification %>
+      <%= display_base_errors resource %>
+      <%= f.input :name, wrapper: :group %>
+      <%= f.input :email, required: true, wrapper: :group %>
+      <%= f.input :password, autocomplete: "off", hint: "Leave it blank if you don't want to change it", required: false, wrapper: :group %>
+      <%= f.input :password_confirmation, required: false, wrapper: :group %>
+      <%= f.input :current_password, hint: "We need your current password to confirm your changes", required: true, wrapper: :group %>
+      <strong>Your avatar:</strong><br />
+      <%= image_tag current_user.avatar.url(:large) %>
+      <%= f.file_field :avatar, wrapper: :group %>
+      <br />
+      <%= f.button :submit, 'Update settings', class: 'btn btn-primary btn-submit' %>
+    <% end %>
+    <hr>
+    <small>Don't want to be a part of <%= project_name %> any longer?</small><br />
+    <%= link_to "Delete my account", registration_path(resource_name), class: 'btn btn-default btn-sm', data: { confirm: "Are you sure?" }, method: :delete %>
+  </div>
+  <div class="col-md-6">
+    <h3>Privacy settings</h3>
+    <%= form_tag update_privacies_user_path(current_user.id) do %>
+      <% @user_privacies.each do |key, val| %>
+        <%= check_box_tag "privacy[#{key}]", true, val %>
+        <%= label_tag "privacy[#{key}]", "Display #{key} in profile" %>
+        <br>
+      <% end %>
+      <br>
+      <%= submit_tag 'Update privacy', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+
+</div>

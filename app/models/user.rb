@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 
   # Relationships
   has_many :photos
+  has_many :privacies, class_name: "UserPrivacy"
 
   # Authentication
   devise :database_authenticatable, :registerable, :recoverable,
@@ -49,4 +50,20 @@ class User < ActiveRecord::Base
   def total_photo_likes
     self.photos.includes(:votes).map {|photo| photo.votes.size }.reduce(0, :+)
   end
+
+  def privacy(key)
+    if UserPrivacy.defaults[key].present?
+      @privacy = self.privacies.create_with(value: UserPrivacy.defaults[key])
+                               .find_or_create_by(key: key)
+
+      @privacy.value
+    else
+      false
+    end
+  end
+
+  def list_privacies
+    Hash[ self.privacies.map{ |p| [p.key.to_sym, p.value] } ].reverse_merge!(UserPrivacy.defaults)
+  end
+
 end

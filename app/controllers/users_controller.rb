@@ -13,6 +13,16 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def update_privacies
+    UserPrivacy.defaults.keys.each do |key|
+      value = params[:privacy][key] || false
+      setting = current_user.privacies.find_or_initialize_by(key: key)
+      setting.update(value: value)
+    end
+
+    redirect_to edit_user_registration_path(current_user), notice: "Privacy settings have been updated"
+  end
+
   def update
     authorize! :update, @user, message: 'Not authorized as an administrator.'
     @user = User.find(user_params[:id])

@@ -1,11 +1,13 @@
 Picturesque::Application.routes.draw do
 
+  get "user_privacies/update"
   root to: "photos#index"
 
   devise_for :users, controllers: { registrations: "registrations" }
 
   resources :users do
     member do
+      post 'update_privacies'
       post 'follow'
       post 'unfollow'
     end
